@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
     <loc>https://planixplus15.github.io/planix-juegos/</loc>
-    <priority>1.0</priority>
+    <lastmod>2026-05-12</lastmod>
   </url>
 
   <url>
     <loc>https://planixplus15.github.io/planix-juegos/about.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-05-12</lastmod>
   </url>
 
   <url>
     <loc>https://planixplus15.github.io/planix-juegos/privacy.html</loc>
-    <priority>0.7</priority>
+    <lastmod>2026-05-12</lastmod>
   </url>
 
   <url>
     <loc>https://planixplus15.github.io/planix-juegos/contact.html</loc>
-    <priority>0.7</priority>
+    <lastmod>2026-05-12</lastmod>
   </url>
 
 </urlset>
