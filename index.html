@@ -217,7 +217,7 @@
         <a href="#trivia">Trivia</a>
         <a href="#memoria">Memoria</a>
         <a href="#snake">Snake</a>
-        <a href="#contacto">Contacto</a>
+        <a href="contact.html">Contacto</a>
       </nav>
       <a class="btn btn-primary" href="#juegos">Jugar ahora</a>
     </div>
@@ -268,6 +268,26 @@
               <div class="chips"><span class="chip">Fútbol</span><span class="chip">Penales</span><span class="chip">Arcade</span></div>
             </div>
             <button class="btn btn-danger" onclick="showGame('penales')">Jugar penales</button>
+          </article>
+
+          <article class="game-card">
+            <div>
+              <div class="game-icon">✊</div>
+              <h3>Piedra, Papel o Tijera</h3>
+              <p>Reta a la máquina en partidas rápidas. Ideal para jugar en celular sin complicaciones.</p>
+              <div class="chips"><span class="chip">Clásico</span><span class="chip">Rápido</span><span class="chip">Móvil</span></div>
+            </div>
+            <button class="btn btn-soft" onclick="showGame('ppt')">Jugar PPT</button>
+          </article>
+
+          <article class="game-card">
+            <div>
+              <div class="game-icon">🚀</div>
+              <h3>Clicker Cósmico</h3>
+              <p>Haz clic, sube puntos y compra mejoras. Un juego sencillo pero peligrosamente adictivo.</p>
+              <div class="chips"><span class="chip">Clicker</span><span class="chip">Puntos</span><span class="chip">Upgrade</span></div>
+            </div>
+            <button class="btn btn-primary" onclick="showGame('clicker')">Jugar clicker</button>
           </article>
           <article class="game-card">
             <div>
@@ -384,9 +404,61 @@
       </div>
     </section>
 
+    <section class="game-panel" id="ppt">
+          <div class="game-head">
+            <h2>✊ Piedra, Papel o Tijera</h2>
+            <div class="score-row">
+              <span class="score-pill">Tú: <b id="pptUser">0</b></span>
+              <span class="score-pill">Máquina: <b id="pptBot">0</b></span>
+            </div>
+          </div>
+          <div style="display:grid;gap:18px;max-width:720px;margin:auto;">
+            <div class="info-box" style="text-align:center;">Elige una opción. Piedra gana a tijera, tijera gana a papel y papel gana a piedra.</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+              <button class="btn btn-soft" onclick="playPPT('piedra')">✊ Piedra</button>
+              <button class="btn btn-primary" onclick="playPPT('papel')">✋ Papel</button>
+              <button class="btn btn-purple" onclick="playPPT('tijera')">✌️ Tijera</button>
+            </div>
+            <div id="pptResult" class="question" style="text-align:center;font-size:22px;">Elige tu jugada.</div>
+          </div>
+        </section>
+
+        <section class="game-panel" id="clicker">
+          <div class="game-head">
+            <h2>🚀 Clicker Cósmico</h2>
+            <div class="score-row">
+              <span class="score-pill">Puntos: <b id="clickPoints">0</b></span>
+              <span class="score-pill">Por clic: <b id="clickPower">1</b></span>
+            </div>
+          </div>
+          <div style="display:grid;gap:18px;max-width:720px;margin:auto;text-align:center;">
+            <div class="info-box">Toca el cohete para sumar puntos. Compra mejoras y rompe tu récord local.</div>
+            <button onclick="cosmicClick()" style="font-size:68px;background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(168,85,247,.26));border:1px solid var(--line);border-radius:28px;padding:26px;cursor:pointer;">🚀</button>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+              <button class="btn btn-green" onclick="buyUpgrade()">Comprar mejora: <span id="upgradeCost">25</span> pts</button>
+              <button class="btn btn-soft" onclick="resetClicker()">Reiniciar</button>
+            </div>
+            <div id="clickerMessage" class="message">Cada clic suma puntos. Modo emprendedora gamer activado.</div>
+          </div>
+        </section>
+      </div>
+    </section>
+
     <section class="container">
       <div class="ad-placeholder">
-        <div><strong>Espacio para anuncio AdSense</strong> Bloque medio entre juegos y contenido informativo.</div>
+        <div><strong>Banner AdSense</strong> Bloque responsive normal. Mantener separado de botones y controles.</div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="ad-placeholder">
+        <div><strong>Publicidad nativa</strong> Espacio para anuncio nativo o in-feed cuando AdSense esté aprobado.</div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="ad-placeholder">
+        <div><strong>Video / Interstitial</strong> Para intersticial o video se recomienda Auto Ads o H5 Games Ads, no forzar overlays manuales.</div>
       </div>
     </section>
 
@@ -438,8 +510,9 @@
       <div class="footer-links">
         <a href="#inicio">Inicio</a>
         <a href="#juegos">Juegos</a>
-        <a href="#contacto">Contacto</a>
-        <a href="#contacto">Privacidad</a>
+        <a href="contact.html">Contacto</a>
+        <a href="privacy.html">Privacidad</a>
+        <a href="about.html">Acerca de</a>
       </div>
     </div>
   </footer>
@@ -452,6 +525,49 @@
       if(id==='trivia' && !quizStarted){ restartQuiz(); }
       if(id==='memoria' && !memoryStarted){ startMemory(); }
       if(id==='snake'){ drawSnake();
+
+    let pptUser=0, pptBot=0;
+    function playPPT(user){
+      const options=['piedra','papel','tijera'];
+      const bot=options[Math.floor(Math.random()*3)];
+      let result='Empate 😅';
+      if(user!==bot){
+        const win=(user==='piedra'&&bot==='tijera')||(user==='papel'&&bot==='piedra')||(user==='tijera'&&bot==='papel');
+        if(win){ pptUser++; result='Ganaste esta ronda 🔥'; }
+        else{ pptBot++; result='La máquina ganó esta vez 🤖'; }
+      }
+      document.getElementById('pptUser').textContent=pptUser;
+      document.getElementById('pptBot').textContent=pptBot;
+      document.getElementById('pptResult').innerHTML='Tú elegiste <b>'+user+'</b> y la máquina <b>'+bot+'</b><br>'+result;
+    }
+
+    let clickPoints=parseInt(localStorage.getItem('clickPoints')||0);
+    let clickPower=parseInt(localStorage.getItem('clickPower')||1);
+    let upgradeCost=parseInt(localStorage.getItem('upgradeCost')||25);
+    function updateClicker(){
+      document.getElementById('clickPoints').textContent=clickPoints;
+      document.getElementById('clickPower').textContent=clickPower;
+      document.getElementById('upgradeCost').textContent=upgradeCost;
+      localStorage.setItem('clickPoints',clickPoints);
+      localStorage.setItem('clickPower',clickPower);
+      localStorage.setItem('upgradeCost',upgradeCost);
+    }
+    function cosmicClick(){ clickPoints+=clickPower; updateClicker(); }
+    function buyUpgrade(){
+      if(clickPoints>=upgradeCost){
+        clickPoints-=upgradeCost; clickPower++; upgradeCost=Math.ceil(upgradeCost*1.6);
+        document.getElementById('clickerMessage').textContent='Mejora comprada ✅ Ahora sumas más por clic.';
+      }else{
+        document.getElementById('clickerMessage').textContent='Aún no tienes puntos suficientes para la mejora.';
+      }
+      updateClicker();
+    }
+    function resetClicker(){
+      clickPoints=0; clickPower=1; upgradeCost=25;
+      document.getElementById('clickerMessage').textContent='Clicker reiniciado.';
+      updateClicker();
+    }
+    updateClicker();
 
     let goals=0, shots=0;
     function shoot(direction){
