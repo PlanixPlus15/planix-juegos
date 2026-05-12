@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="PLANIX Juegos: mini juegos gratuitos en HTML como trivia de fútbol, memoria y snake para jugar online desde el navegador." />
   <title>PLANIX Juegos | Mini juegos gratis online</title>
+  <meta name="keywords" content="juegos online, mini juegos, juegos HTML5, snake, trivia fútbol, juegos gratis, juegos navegador" />
+  <meta name="author" content="PLANIX Juegos" />
+  <meta property="og:title" content="PLANIX Juegos" />
+  <meta property="og:description" content="Mini juegos gratuitos online para jugar desde celular o PC." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
 
   <!--
     ADSENSE - CUANDO TENGAS TU CUENTA APROBADA:
@@ -254,6 +261,15 @@
         <div class="game-grid">
           <article class="game-card">
             <div>
+              <div class="game-icon">🏆</div>
+              <h3>Penales PRO</h3>
+              <p>Escoge dirección y trata de anotar la mayor cantidad de goles posibles contra el arquero.</p>
+              <div class="chips"><span class="chip">Fútbol</span><span class="chip">Penales</span><span class="chip">Arcade</span></div>
+            </div>
+            <button class="btn btn-danger" onclick="showGame('penales')">Jugar penales</button>
+          </article>
+          <article class="game-card">
+            <div>
               <div class="game-icon">⚽</div>
               <h3>Trivia Fútbol</h3>
               <p>Responde preguntas rápidas y suma puntos. Ideal para contenido deportivo y visitantes casuales.</p>
@@ -338,6 +354,53 @@
             </div>
           </div>
         </section>
+
+        <section class="game-panel" id="penales">
+          <div class="game-head">
+            <h2>🏆 Penales PRO</h2>
+            <div class="score-row">
+              <span class="score-pill">Goles: <b id="goals">0</b></span>
+              <span class="score-pill">Intentos: <b id="shots">0</b></span>
+            </div>
+          </div>
+
+          <div style="display:grid;gap:18px;max-width:700px;margin:auto;">
+            <div class="info-box" style="text-align:center;">
+              Elige una dirección para disparar. El arquero intentará adivinar. Simple… pero cuando falla duele más que perder una final 😭
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+              <button class="btn btn-primary" onclick="shoot('left')">⬅️ Izquierda</button>
+              <button class="btn btn-purple" onclick="shoot('center')">⬆️ Centro</button>
+              <button class="btn btn-green" onclick="shoot('right')">➡️ Derecha</button>
+            </div>
+
+            <div id="penaltyResult" class="question" style="text-align:center;font-size:24px;">
+              ⚽ ¡Prepárate para disparar!
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="ad-placeholder">
+        <div><strong>Espacio para anuncio AdSense</strong> Bloque medio entre juegos y contenido informativo.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <div><span class="tag">🔥 Tendencias</span><h2>Lo más jugado</h2></div>
+          <p>Agregar secciones dinámicas ayuda a que el sitio se vea más completo para visitantes y motores de búsqueda.</p>
+        </div>
+
+        <div class="legal-grid">
+          <article class="legal-card"><h3>🐍 Snake Retro</h3><p>El clásico favorito para partidas rápidas desde celular.</p></article>
+          <article class="legal-card"><h3>⚽ Trivia Fútbol</h3><p>Ideal para fanáticos del fútbol y retos entre amigos.</p></article>
+          <article class="legal-card"><h3>🧠 Memoria</h3><p>Perfecto para niños, jóvenes y partidas casuales.</p></article>
+        </div>
       </div>
     </section>
 
@@ -387,7 +450,27 @@
       document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
       if(id==='trivia' && !quizStarted){ restartQuiz(); }
       if(id==='memoria' && !memoryStarted){ startMemory(); }
-      if(id==='snake'){ drawSnake(); }
+      if(id==='snake'){ drawSnake();
+
+    let goals=0, shots=0;
+    function shoot(direction){
+      const keeper=['left','center','right'][Math.floor(Math.random()*3)];
+      shots++;
+      document.getElementById('shots').textContent=shots;
+
+      if(direction!==keeper){
+        goals++;
+        document.getElementById('goals').textContent=goals;
+        document.getElementById('penaltyResult').innerHTML='🥅 GOOOOOL ⚽';
+      }else{
+        document.getElementById('penaltyResult').innerHTML='🧤 El arquero la atajó';
+      }
+    }
+
+    // Registro básico de visitas
+    let visits=parseInt(localStorage.getItem('planixVisits')||0);
+    visits++;
+    localStorage.setItem('planixVisits',visits); }
     }
 
     const quizQuestions = [
